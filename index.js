@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 const path = require("path");
 
 const app = express();
@@ -72,7 +72,7 @@ async function autoScroll(page) {
   });
 }
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
