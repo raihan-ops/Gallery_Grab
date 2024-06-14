@@ -8,7 +8,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 const getQuotes = async (url) => {
-  const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        executablePath: '/usr/bin/chromium-browser' // Ensure this is the correct path for Chromium
+      });
   const page = await browser.newPage();
 
   try {
