@@ -15,18 +15,9 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    backdrop-filter: brightness(0.4);
 }
 
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.743);
-    z-index: 0;
-}
 
 header {
     background-color: #4CAF50;
