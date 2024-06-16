@@ -28,7 +28,7 @@ const getQuotes = async (url) => {
   console.log("New page created.");
   try {
     await page.goto(url, { waitUntil: "networkidle2", timeout: 100000 });
-    console.log(`Navigated to ${url}`);
+    // console.log(`Navigated to ${url}`);
     await page.setViewport({
       width: 1200,
       height: 5000,

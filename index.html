@@ -78,7 +78,8 @@
             const fetchImage = async (url, index) => {
                 const response = await fetch(url);
                 const blob = await response.blob();
-                folder.file(`image${index + 1}`, blob);
+                const extension = getExtension(blob.type);
+                folder.file(`image${index + 1}.${extension}`, blob);
             };
 
             await Promise.all(urls.map((url, index) => fetchImage(url, index)));
@@ -90,7 +91,25 @@
             a.click();
         }
 
-        
+        function getExtension(mimeType) {
+            switch (mimeType) {
+                case 'image/jpeg':
+                    return 'jpg';
+                case 'image/png':
+                    return 'png';
+                case 'image/gif':
+                    return 'gif';
+                case 'image/webp':
+                    return 'webp';
+                case 'image/avif':
+                    return 'avif';
+                // Add more cases for other image types if needed
+                default:
+                    return 'jpg'; // Default to jpg if the type is unknown
+            }
+        }
+
+
     </script>
 </body>
 
