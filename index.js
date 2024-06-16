@@ -27,7 +27,7 @@ const getQuotes = async (url) => {
   const page = await browser.newPage();
   console.log("New page created.");
   try {
-    await page.goto(url, { waitUntil: "networkidle2",timeout: 100000 });
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 100000 });
     console.log(`Navigated to ${url}`);
     await page.setViewport({
       width: 1200,
@@ -37,8 +37,12 @@ const getQuotes = async (url) => {
     await autoScroll(page);
 
     const imgSrcs = await page.evaluate(() => {
-      const imgs = document.querySelectorAll("picture img");
-      return Array.from(imgs).map((img) => img.getAttribute("src"));
+      const imgs = document.querySelectorAll('picture img');
+      return Array.from(imgs).map(img => {
+        const src = img.getAttribute('src');
+        const match = src.match(/(.+\.png|.+\.jpg|.+\.jpeg|.+\.webp)/);
+        return match ? match[0] : src;
+      });
     });
 
     return imgSrcs;
@@ -83,10 +87,30 @@ async function autoScroll(page) {
   });
 }
 
-const PORT = process.env.PORT || 3000;
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const detectPort = require('detect-port');
+
+const DEFAULT_PORT = 3000;
+
+detectPort(DEFAULT_PORT, (err, availablePort) => {
+  if (err) {
+    console.error('Error detecting port:', err);
+    process.exit(1);
+  }
+
+  const port = availablePort === DEFAULT_PORT ? DEFAULT_PORT : availablePort;
+  console.log(`Using port: ${port}`);
+  process.env.PORT = port;
+
+  const PORT = process.env.PORT || 3000;
+  const server = app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+
+  // Start the React app
 });
+
+
+
 
 // Handle process events to ensure server stability
 process.on("unhandledRejection", (error, promise) => {

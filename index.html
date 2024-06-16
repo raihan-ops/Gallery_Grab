@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIRBNB Image Scrapper</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <img src="assts/logo.png" alt="AIRBNB">
@@ -14,7 +16,8 @@
     <main>
         <form id="urlForm">
             <label for="url">Paste Your Link Here</label>
-            <input type="text" id="url" name="url" placeholder="EX: https://fr.airbnb.ca/rooms/modal=PHOTO_TOUR_SCROLLABLE" required>
+            <input type="text" id="url" name="url"
+                placeholder="EX: https://fr.airbnb.ca/rooms/modal=PHOTO_TOUR_SCROLLABLE" required>
             <button type="submit">Submit</button>
         </form>
         <div id="loader"></div>
@@ -75,7 +78,7 @@
             const fetchImage = async (url, index) => {
                 const response = await fetch(url);
                 const blob = await response.blob();
-                folder.file(`image${index + 1}.jpg`, blob);
+                folder.file(`image${index + 1}`, blob);
             };
 
             await Promise.all(urls.map((url, index) => fetchImage(url, index)));
@@ -86,6 +89,9 @@
             a.download = 'images.zip';
             a.click();
         }
+
+        
     </script>
 </body>
+
 </html>
